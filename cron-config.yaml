@@ -1,0 +1,49 @@
+# VeloCommand Cron Configuration
+# Add this to your OpenClaw cron schedule
+
+# TrainingPeaks Sync - 6:00 AM daily
+# Fetches latest workouts, fitness metrics, updates dashboard data
+- schedule: "0 6 * * *"
+  name: "veloc-tp-sync"
+  description: "Daily TrainingPeaks data sync"
+  payload:
+    kind: "agentTurn"
+    text: |
+      Run the TrainingPeaks sync script:
+      cd /root/.openclaw/workspace/velocommand && python3 scripts/sync-tp.py
+      Then report the results to the user with any notable changes in CTL/ATL/TSB.
+  sessionTarget: "isolated"
+
+# Wellness Check-in Reminder - 8:00 PM daily
+# Sends Telegram reminder if wellness not yet logged
+- schedule: "0 20 * * *"
+  name: "veloc-wellness-reminder"
+  description: "Daily wellness check-in reminder"
+  payload:
+    kind: "agentTurn"
+    text: |
+      Check if wellness was logged today. If not, send a reminder message to the user.
+      Also provide a quick summary of today's training data from TrainingPeaks.
+  sessionTarget: "isolated"
+
+# Daily Summary - 11:00 PM daily
+# Generates end-of-day training summary
+- schedule: "0 23 * * *"
+  name: "veloc-daily-summary"
+  description: "End of day training summary"
+  payload:
+    kind: "agentTurn"
+    text: |
+      Generate a daily training summary:
+  sessionTarget: "isolated"
+
+# Optional: Morning Briefing - 7:00 AM daily
+# Quick stats update before training
+- schedule: "0 7 * * *"
+  name: "veloc-morning-brief"
+  description: "Morning training briefing"
+  payload:
+    kind: "agentTurn"
+    text: |
+      Send a quick morning briefing with today's planned workout, current CTL/ATL/TSB, and any wellness-based adjustments.
+  sessionTarget: "isolated"
