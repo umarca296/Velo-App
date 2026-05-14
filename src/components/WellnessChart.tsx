@@ -32,7 +32,7 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
   const latestReadiness = latest ? calculateReadiness(latest) : null;
 
   const TrendIcon = trend === 'improving' ? TrendingUp : trend === 'declining' ? TrendingDown : Minus;
-  const trendColor = trend === 'improving' ? 'text-cycling-400' : trend === 'declining' ? 'text-orange-400' : 'text-gray-400';
+  const trendColor = trend === 'improving' ? 'text-cycling-600' : trend === 'declining' ? 'text-orange-600' : 'text-gray-500';
 
   return (
     <div className="space-y-6">
@@ -40,21 +40,21 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="card">
           <p className="stat-label">Today's Readiness</p>
-          <p className={`stat-value ${latestReadiness?.readiness === 'high' ? 'text-cycling-400' : latestReadiness?.readiness === 'moderate' ? 'text-yellow-400' : latestReadiness?.readiness === 'low' ? 'text-orange-400' : 'text-red-400'}`}>
+          <p className={`stat-value ${latestReadiness?.readiness === 'high' ? 'text-cycling-600' : latestReadiness?.readiness === 'moderate' ? 'text-yellow-600' : latestReadiness?.readiness === 'low' ? 'text-orange-600' : 'text-red-600'}`}>
             {latestReadiness?.readiness === 'high' ? '🔥 High' : latestReadiness?.readiness === 'moderate' ? '✓ Moderate' : latestReadiness?.readiness === 'low' ? '⚠ Low' : '🛑 Rest'}
           </p>
         </div>
         
         <div className="card">
           <p className="stat-label">Wellness Score</p>
-          <p className="stat-value text-blue-400">
+          <p className="stat-value text-blue-600">
             {latestReadiness?.score || 0}/25
           </p>
         </div>
         
         <div className="card">
           <p className="stat-label">7-Day Average</p>
-          <p className="stat-value text-purple-400">
+          <p className="stat-value text-purple-600">
             {avgScore}
           </p>
         </div>
@@ -70,17 +70,17 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
 
       {/* Readiness Chart */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Heart className="w-5 h-5 text-red-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <Heart className="w-5 h-5 text-red-600" />
           Wellness & Readiness (14 Days)
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
-            <YAxis stroke="#9ca3af" fontSize={12} domain={[0, 25]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
+            <YAxis stroke="#6b7280" fontSize={12} domain={[0, 25]} />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
               labelStyle={{ color: '#fff' }}
               formatter={(value: number, name: string) => {
                 if (name === 'readiness') return [`${value}/25`, 'Readiness'];
@@ -94,28 +94,28 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
 
       {/* Component Breakdown */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4">Wellness Components</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Wellness Components</h3>
         <div className="grid grid-cols-5 gap-2 mb-4">
           {latest && (
             <>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <p className="text-xs text-gray-400">Motivation</p>
-                <p className="text-xl font-bold text-yellow-400">{latest.motivation}</p>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <p className="text-xs text-gray-500">Motivation</p>
+                <p className="text-xl font-bold text-yellow-600">{latest.motivation}</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <p className="text-xs text-gray-400">Soreness</p>
-                <p className="text-xl font-bold text-orange-400">{latest.muscleSoreness}</p>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <p className="text-xs text-gray-500">Soreness</p>
+                <p className="text-xl font-bold text-orange-600">{latest.muscleSoreness}</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <p className="text-xs text-gray-400">Stress</p>
-                <p className="text-xl font-bold text-purple-400">{latest.lifeStress}</p>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <p className="text-xs text-gray-500">Stress</p>
+                <p className="text-xl font-bold text-purple-600">{latest.lifeStress}</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <p className="text-xs text-gray-400">Fatigue</p>
-                <p className="text-xl font-bold text-blue-400">{latest.fatigueLevel}</p>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <p className="text-xs text-gray-500">Fatigue</p>
+                <p className="text-xl font-bold text-blue-600">{latest.fatigueLevel}</p>
               </div>
-              <div className="bg-gray-800 rounded-lg p-3 text-center">
-                <p className="text-xs text-gray-400">Sleep</p>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <p className="text-xs text-gray-500">Sleep</p>
                 <p className="text-xl font-bold text-indigo-400">{latest.sleepQuality}</p>
               </div>
             </>
@@ -124,11 +124,11 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
         
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={chartData.slice(-7)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
-            <YAxis stroke="#9ca3af" fontSize={12} domain={[0, 5]} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
+            <YAxis stroke="#6b7280" fontSize={12} domain={[0, 5]} />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
               labelStyle={{ color: '#fff' }}
             />
             <Bar dataKey="motivation" fill="#fbbf24" name="Motivation" />
@@ -149,10 +149,10 @@ export default function WellnessChart({ entries }: WellnessChartProps) {
           <h4 className="text-sm font-medium mb-2 uppercase tracking-wider">
             Today's Recommendation
           </h4>
-          <p className="text-lg text-white">
+          <p className="text-lg text-gray-900">
             {latestReadiness.recommendation}
           </p>
-          <p className="text-sm text-gray-400 mt-2">
+          <p className="text-sm text-gray-500 mt-2">
             Based on your wellness score of {latestReadiness.score}/25
           </p>
         </div>

@@ -166,8 +166,8 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
   const Change = ({ current, previous }: { current: number; previous: number }) => {
     const diff = current - previous;
     const pct = previous > 0 ? Math.round(diff / previous * 100) : 0;
-    if (diff > 0) return <span className="text-cycling-400 text-xs flex items-center gap-0.5"><ArrowUpRight className="w-3 h-3" />+{pct}%</span>;
-    if (diff < 0) return <span className="text-orange-400 text-xs flex items-center gap-0.5"><ArrowDownRight className="w-3 h-3" />{pct}%</span>;
+    if (diff > 0) return <span className="text-cycling-600 text-xs flex items-center gap-0.5"><ArrowUpRight className="w-3 h-3" />+{pct}%</span>;
+    if (diff < 0) return <span className="text-orange-600 text-xs flex items-center gap-0.5"><ArrowDownRight className="w-3 h-3" />{pct}%</span>;
     return <span className="text-gray-500 text-xs flex items-center gap-0.5"><Minus className="w-3 h-3" />0%</span>;
   };
 
@@ -188,11 +188,11 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
     <div className="space-y-6">
       {/* ── HEADER ── */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-          <Activity className="w-7 h-7 text-cycling-400" />
+        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
+          <Activity className="w-7 h-7 text-cycling-600" />
           Performance Stats
         </h2>
-        <div className="text-sm text-gray-400">
+        <div className="text-sm text-gray-500">
           Last 4 weeks · {athlete.name} · {athlete.ftp}W FTP
         </div>
       </div>
@@ -208,12 +208,12 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             <TrendingUp className="w-full h-full" />
           </div>
           <div className="flex items-center gap-2 mb-2">
-            <Target className="w-4 h-4 text-cycling-400" />
+            <Target className="w-4 h-4 text-cycling-600" />
             <span className="stat-label">Fitness (CTL)</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-white">{latest.ctl}</span>
-            <span className="text-sm text-gray-400">pts</span>
+            <span className="text-4xl font-bold text-gray-900">{latest.ctl}</span>
+            <span className="text-sm text-gray-500">pts</span>
           </div>
           <div className="mt-2 h-8">
             <ResponsiveContainer width="100%" height="100%">
@@ -231,15 +231,15 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             <Flame className="w-full h-full" />
           </div>
           <div className="flex items-center gap-2 mb-2">
-            <Flame className="w-4 h-4 text-orange-400" />
+            <Flame className="w-4 h-4 text-orange-600" />
             <span className="stat-label">Fatigue (ATL)</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-white">{latest.atl}</span>
-            <span className="text-sm text-gray-400">pts</span>
+            <span className="text-4xl font-bold text-gray-900">{latest.atl}</span>
+            <span className="text-sm text-gray-500">pts</span>
           </div>
           <div className="mt-2">
-            <div className={`text-sm font-medium ${latest.tsb > -10 ? 'text-cycling-400' : latest.tsb > -20 ? 'text-yellow-400' : 'text-red-400'}`}>
+            <div className={`text-sm font-medium ${latest.tsb > -10 ? 'text-cycling-600' : latest.tsb > -20 ? 'text-yellow-600' : 'text-red-600'}`}>
               TSB: {latest.tsb > 0 ? '+' : ''}{latest.tsb}
             </div>
             <div className="text-xs text-gray-500">
@@ -254,18 +254,18 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             <Clock className="w-full h-full" />
           </div>
           <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-4 h-4 text-blue-400" />
+            <Clock className="w-4 h-4 text-blue-600" />
             <span className="stat-label">This Week</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-white">{Math.round(periods.thisStats.hours * 10) / 10}</span>
-            <span className="text-sm text-gray-400">hrs</span>
+            <span className="text-4xl font-bold text-gray-900">{Math.round(periods.thisStats.hours * 10) / 10}</span>
+            <span className="text-sm text-gray-500">hrs</span>
           </div>
           <div className="mt-1">
             <Change current={periods.thisStats.hours} previous={periods.lastStats.hours} />
             <span className="text-xs text-gray-500 ml-2">vs last week</span>
           </div>
-          <div className="mt-1 text-xs text-cycling-400">
+          <div className="mt-1 text-xs text-cycling-600">
             {periods.thisStats.count} rides · {periods.thisStats.tss} TSS
           </div>
         </div>
@@ -276,12 +276,12 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             <Award className="w-full h-full" />
           </div>
           <div className="flex items-center gap-2 mb-2">
-            <Award className="w-4 h-4 text-yellow-400" />
+            <Award className="w-4 h-4 text-yellow-600" />
             <span className="stat-label">Streak</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-bold text-white">{consistency.streak}</span>
-            <span className="text-sm text-gray-400">days</span>
+            <span className="text-4xl font-bold text-gray-900">{consistency.streak}</span>
+            <span className="text-sm text-gray-500">days</span>
           </div>
           <div className="mt-1 text-xs text-gray-500">
             Consecutive training days
@@ -291,8 +291,8 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
 
       {/* ── WEEKLY COMPARISON ── */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-cycling-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <Calendar className="w-5 h-5 text-cycling-600" />
           Weekly Comparison
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -303,16 +303,16 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             { label: 'Elevation', current: Math.round(periods.thisStats.elevation), prev: Math.round(periods.lastStats.elevation), unit: 'm' },
             { label: 'Rides', current: periods.thisStats.count, prev: periods.lastStats.count, unit: '' },
           ].map((stat) => (
-            <div key={stat.label} className="bg-gray-800/50 rounded-lg p-3">
-              <p className="text-xs text-gray-400 uppercase tracking-wider">{stat.label}</p>
+            <div key={stat.label} className="bg-gray-100/80 rounded-lg p-3">
+              <p className="text-xs text-gray-500 uppercase tracking-wider">{stat.label}</p>
               <div className="flex items-baseline gap-1 mt-1">
-                <span className="text-xl font-bold text-white">{stat.current}</span>
+                <span className="text-xl font-bold text-gray-900">{stat.current}</span>
                 <span className="text-xs text-gray-500">{stat.unit}</span>
               </div>
               <div className="mt-1">
                 <Change current={stat.current} previous={stat.prev} />
               </div>
-              <div className="mt-1 text-xs text-gray-600">
+              <div className="mt-1 text-xs text-gray-400">
                 4wk avg: {stat.label === 'Hours' ? periods.fourWeekAvg.hours :
                   stat.label === 'TSS' ? periods.fourWeekAvg.tss :
                   stat.label === 'Distance' ? periods.fourWeekAvg.distance :
@@ -328,17 +328,17 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Weekly Trend */}
         <div className="card lg:col-span-2">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-cycling-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-cycling-600" />
             12-Week Training Load Trend
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <BarChart data={weeklyTrend}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="week" stroke="#9ca3af" fontSize={11} />
-              <YAxis stroke="#9ca3af" fontSize={11} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="week" stroke="#6b7280" fontSize={11} />
+              <YAxis stroke="#6b7280" fontSize={11} />
               <Tooltip
-                contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 labelStyle={{ color: '#fff' }}
               />
               <Bar dataKey="hours" fill="#60a5fa" radius={[4, 4, 0, 0]} name="Hours" />
@@ -349,15 +349,15 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
 
         {/* Fitness Fingerprint Radar */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Gauge className="w-5 h-5 text-purple-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Gauge className="w-5 h-5 text-purple-600" />
             Fitness Fingerprint
           </h3>
           <ResponsiveContainer width="100%" height={280}>
             <RadarChart data={radarData}>
-              <PolarGrid stroke="#374151" />
-              <PolarAngleAxis dataKey="metric" stroke="#9ca3af" fontSize={11} />
-              <PolarRadiusAxis stroke="#4b5563" fontSize={10} />
+              <PolarGrid stroke="#e5e7eb" />
+              <PolarAngleAxis dataKey="metric" stroke="#6b7280" fontSize={11} />
+              <PolarRadiusAxis stroke="#9ca3af" fontSize={10} />
               <Radar name="Current" dataKey="value" stroke="#22c55e" fill="#22c55e" fillOpacity={0.3} strokeWidth={2} />
             </RadarChart>
           </ResponsiveContainer>
@@ -368,14 +368,14 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Zone Distribution */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Zap className="w-5 h-5 text-yellow-600" />
             Zone Distribution (Last 28 Days)
           </h3>
           <div className="flex items-end gap-2 h-48 mb-4">
             {zoneDist.map((z) => (
               <div key={z.zone} className="flex-1 flex flex-col items-center gap-1">
-                <div className="text-xs text-gray-400">{z.pct}%</div>
+                <div className="text-xs text-gray-500">{z.pct}%</div>
                 <div
                   className="w-full rounded-t-md transition-all"
                   style={{
@@ -384,7 +384,7 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
                     minHeight: '20px',
                   }}
                 />
-                <div className="text-xs font-medium text-white">{z.zone}</div>
+                <div className="text-xs font-medium text-gray-900">{z.zone}</div>
                 <div className="text-xs text-gray-500">{z.hours}h</div>
               </div>
             ))}
@@ -393,7 +393,7 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             {zoneDist.map((z) => (
               <div key={z.zone} className="flex items-center gap-1.5">
                 <div className="w-3 h-3 rounded" style={{ backgroundColor: zoneColors[z.zone] }} />
-                <span className="text-xs text-gray-400">{z.zone}: {z.hours}h</span>
+                <span className="text-xs text-gray-500">{z.zone}: {z.hours}h</span>
               </div>
             ))}
           </div>
@@ -401,20 +401,20 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
 
         {/* Power Profile */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Mountain className="w-5 h-5 text-orange-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Mountain className="w-5 h-5 text-orange-600" />
             Power Profile
           </h3>
           <div className="space-y-3">
             {powerProfile.map((p, i) => (
               <div key={p.duration} className="flex items-center gap-3">
-                <div className="w-16 text-sm font-medium text-gray-300">{p.duration}</div>
+                <div className="w-16 text-sm font-medium text-gray-400">{p.duration}</div>
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-1">
-                    <span className="text-sm text-white font-bold">{p.power}W</span>
-                    <span className="text-xs text-gray-400">{p.wkg} W/kg · {p.ftpPct}% FTP</span>
+                    <span className="text-sm text-gray-900 font-bold">{p.power}W</span>
+                    <span className="text-xs text-gray-500">{p.wkg} W/kg · {p.ftpPct}% FTP</span>
                   </div>
-                  <div className="h-2 bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
                     <div
                       className="h-full rounded-full transition-all"
                       style={{
@@ -432,8 +432,8 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
 
       {/* ── PMC FULL CHART ── */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-cycling-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-cycling-600" />
           Performance Management Chart (PMC)
         </h3>
         <ResponsiveContainer width="100%" height={300}>
@@ -443,11 +443,11 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             ATL: Math.round(m.atl * 10) / 10,
             TSB: Math.round(m.tsb * 10) / 10,
           }))}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="date" stroke="#9ca3af" fontSize={11} />
-            <YAxis stroke="#9ca3af" fontSize={11} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
+            <YAxis stroke="#6b7280" fontSize={11} />
             <Tooltip
-              contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
               labelStyle={{ color: '#fff' }}
             />
             <Legend />
@@ -460,8 +460,8 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
 
       {/* ── RECENT WORKOUTS SUMMARY ── */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-cycling-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <Activity className="w-5 h-5 text-cycling-600" />
           Recent Workouts Summary
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -470,23 +470,23 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             const zoneLabel = zone < 0.55 ? 'Z1' : zone < 0.75 ? 'Z2' : zone < 0.90 ? 'Z3' : zone < 1.05 ? 'Z4' : zone < 1.20 ? 'Z5' : 'Z6';
             const zoneColor = zoneColors[zoneLabel];
             return (
-              <div key={w.id} className="bg-gray-800/50 rounded-lg p-3 border border-gray-700/50">
+              <div key={w.id} className="bg-gray-100/80 rounded-lg p-3 border border-gray-300/50">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-white">{w.title}</span>
+                  <span className="text-sm font-medium text-gray-900">{w.title}</span>
                   <span className="text-xs text-gray-500">{w.date.toLocaleDateString()}</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <div className="text-xs text-gray-400">Duration</div>
-                    <div className="text-sm font-semibold text-white">{w.duration}min</div>
+                    <div className="text-xs text-gray-500">Duration</div>
+                    <div className="text-sm font-semibold text-gray-900">{w.duration}min</div>
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400">TSS</div>
-                    <div className="text-sm font-semibold text-cycling-400">{w.tss}</div>
+                    <div className="text-xs text-gray-500">TSS</div>
+                    <div className="text-sm font-semibold text-cycling-600">{w.tss}</div>
                   </div>
                   <div>
-                    <div className="text-xs text-gray-400">IF</div>
-                    <div className="text-sm font-semibold text-white">{w.if.toFixed(2)}</div>
+                    <div className="text-xs text-gray-500">IF</div>
+                    <div className="text-sm font-semibold text-gray-900">{w.if.toFixed(2)}</div>
                   </div>
                 </div>
                 <div className="mt-2 flex items-center gap-2">

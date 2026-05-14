@@ -23,41 +23,41 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="border-b border-gray-800 bg-gray-900/50 backdrop-blur">
+      <header className="border-b border-gray-200 bg-white/80 backdrop-blur">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-cycling-500 rounded-lg flex items-center justify-center">
               <Activity className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">VeloCommand</h1>
-              <p className="text-xs text-gray-400">Cycling Analytics Dashboard</p>
+              <h1 className="text-xl font-bold text-gray-900">VeloCommand</h1>
+              <p className="text-xs text-gray-500">Cycling Analytics Dashboard</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="text-right">
-              <p className="text-sm font-medium text-white">{urosProfile.name}</p>
-              <p className="text-xs text-gray-400">FTP: {urosProfile.ftp}W</p>
+              <p className="text-sm font-medium text-gray-900">{urosProfile.name}</p>
+              <p className="text-xs text-gray-500">FTP: {urosProfile.ftp}W</p>
             </div>
-            <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
-              <Settings className="w-5 h-5 text-gray-400" />
+            <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center">
+              <Settings className="w-5 h-5 text-gray-500" />
             </div>
           </div>
         </div>
       </header>
 
       {/* Navigation */}
-      <nav className="border-b border-gray-800 bg-gray-900/30">
+      <nav className="border-b border-gray-200 bg-gray-100/50">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex gap-1">
             <button
               onClick={() => setActiveTab('dashboard')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'dashboard'
-                  ? 'border-cycling-500 text-cycling-400'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'border-cycling-500 text-cycling-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               <TrendingUp className="w-4 h-4 inline mr-2" />
@@ -67,8 +67,8 @@ export default function App() {
               onClick={() => setActiveTab('plan')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'plan'
-                  ? 'border-cycling-500 text-cycling-400'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'border-cycling-500 text-cycling-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               <Calendar className="w-4 h-4 inline mr-2" />
@@ -78,8 +78,8 @@ export default function App() {
               onClick={() => setActiveTab('stats')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'stats'
-                  ? 'border-cycling-500 text-cycling-400'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'border-cycling-500 text-cycling-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               <Activity className="w-4 h-4 inline mr-2" />
@@ -89,8 +89,8 @@ export default function App() {
               onClick={() => setActiveTab('wellness')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'wellness'
-                  ? 'border-cycling-500 text-cycling-400'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'border-cycling-500 text-cycling-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               <Heart className="w-4 h-4 inline mr-2" />
@@ -100,8 +100,8 @@ export default function App() {
               onClick={() => setActiveTab('import')}
               className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
                 activeTab === 'import'
-                  ? 'border-cycling-500 text-cycling-400'
-                  : 'border-transparent text-gray-400 hover:text-gray-200'
+                  ? 'border-cycling-500 text-cycling-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
               <Activity className="w-4 h-4 inline mr-2" />

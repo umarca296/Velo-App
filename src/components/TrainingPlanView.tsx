@@ -51,9 +51,9 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
       <div className="card">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-white">{plan.name}</h2>
-            <p className="text-gray-400 mt-1">Goal: {plan.goalEvent}</p>
-            <div className="flex items-center gap-4 mt-3 text-sm text-gray-300">
+            <h2 className="text-2xl font-bold text-gray-900">{plan.name}</h2>
+            <p className="text-gray-500 mt-1">Goal: {plan.goalEvent}</p>
+            <div className="flex items-center gap-4 mt-3 text-sm text-gray-400">
               <span className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {plan.startDate.toLocaleDateString()} — {plan.endDate.toLocaleDateString()}
@@ -64,7 +64,7 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
               </span>
             </div>
           </div>
-          <div className="bg-cycling-500/20 text-cycling-400 px-4 py-2 rounded-lg font-medium">
+          <div className="bg-cycling-500/20 text-cycling-600 px-4 py-2 rounded-lg font-medium">
             {athlete.ftp}W FTP
           </div>
         </div>
@@ -76,20 +76,20 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
           <div key={week.weekNumber} className="card">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl font-bold text-white">W{week.weekNumber}</span>
+                <span className="text-2xl font-bold text-gray-900">W{week.weekNumber}</span>
                 <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                  week.phase === 'base' ? 'bg-blue-500/20 text-blue-400' :
-                  week.phase === 'build' ? 'bg-orange-500/20 text-orange-400' :
-                  week.phase === 'peak' ? 'bg-red-500/20 text-red-400' :
-                  'bg-purple-500/20 text-purple-400'
+                  week.phase === 'base' ? 'bg-blue-500/20 text-blue-600' :
+                  week.phase === 'build' ? 'bg-orange-500/20 text-orange-600' :
+                  week.phase === 'peak' ? 'bg-red-500/20 text-red-600' :
+                  'bg-purple-500/20 text-purple-600'
                 }`}>
                   {week.phase.toUpperCase()}
                 </span>
-                <span className="text-sm text-gray-400">
+                <span className="text-sm text-gray-500">
                   Target: {week.targetTss} TSS / {week.targetHours}h
                 </span>
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-gray-500">
                 {week.workouts.filter(w => w.completed).length}/{week.workouts.length} done
               </div>
             </div>
@@ -113,25 +113,25 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
                     className={`p-3 rounded-lg border cursor-pointer transition-all ${
                       workout.completed 
                         ? 'bg-cycling-500/10 border-cycling-500/30' 
-                        : 'bg-gray-800/50 border-gray-700 hover:border-gray-600'
+                        : 'bg-gray-100/80 border-gray-300 hover:border-gray-400'
                     }`}
                   >
                     <div className="flex items-start justify-between">
-                      <span className="text-xs text-gray-400">{days[workout.dayOfWeek]}</span>
+                      <span className="text-xs text-gray-500">{days[workout.dayOfWeek]}</span>
                       <div className="flex items-center gap-1">
                         {wellnessAdjustment && wellnessAdjustment.adjustedZone === 'Rest' && (
-                          <AlertTriangle className="w-4 h-4 text-red-400" />
+                          <AlertTriangle className="w-4 h-4 text-red-600" />
                         )}
                         {wellnessAdjustment && wellnessAdjustment.adjustedZone !== 'Rest' && wellnessAdjustment.adjustedDuration < workout.duration && (
-                          <Heart className="w-4 h-4 text-orange-400" />
+                          <Heart className="w-4 h-4 text-orange-600" />
                         )}
-                        {workout.completed && <Check className="w-4 h-4 text-cycling-400" />}
+                        {workout.completed && <Check className="w-4 h-4 text-cycling-600" />}
                       </div>
                     </div>
-                    <h4 className={`font-medium mt-1 ${workout.completed ? 'text-cycling-400' : 'text-white'}`}>
+                    <h4 className={`font-medium mt-1 ${workout.completed ? 'text-cycling-600' : 'text-gray-900'}`}>
                       {wellnessAdjustment?.adjustedZone === 'Rest' ? '⛔ REST DAY' : workout.title}
                     </h4>
-                    <p className="text-xs text-gray-400 mt-1">
+                    <p className="text-xs text-gray-500 mt-1">
                       {wellnessAdjustment ? wellnessAdjustment.reason : workout.type}
                     </p>
                     <div className="flex items-center gap-3 mt-2 text-xs">
@@ -141,41 +141,41 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
                             <Clock className="w-3 h-3 inline mr-1" />
                             {workout.duration}min
                           </span>
-                          <span className="text-orange-400">
+                          <span className="text-orange-600">
                             <Clock className="w-3 h-3 inline mr-1" />
                             {wellnessAdjustment.adjustedDuration}min
                           </span>
                           <span className="text-gray-500 line-through">TSS: {workout.targetTss}</span>
-                          <span className="text-orange-400">TSS: {wellnessAdjustment.adjustedTss}</span>
+                          <span className="text-orange-600">TSS: {wellnessAdjustment.adjustedTss}</span>
                         </>
                       ) : (
                         <>
-                          <span className="text-gray-300">
+                          <span className="text-gray-400">
                             <Clock className="w-3 h-3 inline mr-1" />
                             {workout.duration}min
                           </span>
-                          <span className="text-gray-300">TSS: {workout.targetTss}</span>
+                          <span className="text-gray-400">TSS: {workout.targetTss}</span>
                         </>
                       )}
                     </div>
                     {wellnessAdjustment ? (
                       <span className={`inline-block mt-2 px-2 py-0.5 rounded text-xs font-medium ${
-                        wellnessAdjustment.adjustedZone === 'Z2' ? 'bg-blue-500/20 text-blue-400' :
-                        wellnessAdjustment.adjustedZone === 'Rest' ? 'bg-red-500/20 text-red-400' :
-                        wellnessAdjustment.adjustedZone === 'Z3-Z4' ? 'bg-yellow-500/20 text-yellow-400' :
-                        wellnessAdjustment.adjustedZone === 'Z3' ? 'bg-green-500/20 text-green-400' :
-                        'bg-gray-700 text-gray-300'
+                        wellnessAdjustment.adjustedZone === 'Z2' ? 'bg-blue-500/20 text-blue-600' :
+                        wellnessAdjustment.adjustedZone === 'Rest' ? 'bg-red-500/20 text-red-600' :
+                        wellnessAdjustment.adjustedZone === 'Z3-Z4' ? 'bg-yellow-500/20 text-yellow-600' :
+                        wellnessAdjustment.adjustedZone === 'Z3' ? 'bg-green-500/20 text-green-600' :
+                        'bg-gray-700 text-gray-400'
                       }`}>
                         {wellnessAdjustment.adjustedZone}
                       </span>
                     ) : (
                       workout.targetZone && (
                         <span className={`inline-block mt-2 px-2 py-0.5 rounded text-xs ${
-                          workout.targetZone === 'Z2' ? 'bg-blue-500/20 text-blue-400' :
-                          workout.targetZone === 'Z3' ? 'bg-green-500/20 text-green-400' :
-                          workout.targetZone === 'Z4' ? 'bg-yellow-500/20 text-yellow-400' :
-                          workout.targetZone === 'Z5' ? 'bg-red-500/20 text-red-400' :
-                          'bg-gray-700 text-gray-300'
+                          workout.targetZone === 'Z2' ? 'bg-blue-500/20 text-blue-600' :
+                          workout.targetZone === 'Z3' ? 'bg-green-500/20 text-green-600' :
+                          workout.targetZone === 'Z4' ? 'bg-yellow-500/20 text-yellow-600' :
+                          workout.targetZone === 'Z5' ? 'bg-red-500/20 text-red-600' :
+                          'bg-gray-700 text-gray-400'
                         }`}>
                           {workout.targetZone}
                         </span>
@@ -183,11 +183,11 @@ export default function TrainingPlanView({ athlete, metrics, wellnessEntries }: 
                     )}
                     {wellnessForDay && (
                       <div className="mt-2 flex items-center gap-1 text-xs">
-                        <Heart className="w-3 h-3 text-red-400" />
+                        <Heart className="w-3 h-3 text-red-600" />
                         <span className={`${
-                          wellnessReadiness?.readiness === 'high' ? 'text-cycling-400' :
-                          wellnessReadiness?.readiness === 'moderate' ? 'text-yellow-400' :
-                          'text-orange-400'
+                          wellnessReadiness?.readiness === 'high' ? 'text-cycling-600' :
+                          wellnessReadiness?.readiness === 'moderate' ? 'text-yellow-600' :
+                          'text-orange-600'
                         }`}>
                           {wellnessReadiness?.score}/25
                         </span>

@@ -100,45 +100,45 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <div className="card">
           <p className="stat-label">Fitness (CTL)</p>
-          <p className="stat-value text-cycling-400">{stats.ctl}</p>
+          <p className="stat-value text-cycling-600">{stats.ctl}</p>
         </div>
         <div className="card">
           <p className="stat-label">Fatigue (ATL)</p>
-          <p className="stat-value text-orange-400">{stats.atl}</p>
+          <p className="stat-value text-orange-600">{stats.atl}</p>
         </div>
         <div className="card">
           <p className="stat-label">Form (TSB)</p>
-          <p className={`stat-value ${stats.tsb > 0 ? 'text-cycling-400' : 'text-orange-400'}`}>
+          <p className={`stat-value ${stats.tsb > 0 ? 'text-cycling-600' : 'text-orange-600'}`}>
             {stats.tsb}
           </p>
         </div>
         <div className="card">
           <p className="stat-label">Weekly TSS</p>
-          <p className="stat-value text-blue-400">{stats.weeklyTss}</p>
+          <p className="stat-value text-blue-600">{stats.weeklyTss}</p>
         </div>
         <div className="card">
           <p className="stat-label">Weekly Hours</p>
-          <p className="stat-value text-purple-400">{stats.weeklyHours}h</p>
+          <p className="stat-value text-purple-600">{stats.weeklyHours}h</p>
         </div>
         <div className="card">
           <p className="stat-label">Intensity Factor</p>
-          <p className="stat-value text-yellow-400">{stats.avgIf}</p>
+          <p className="stat-value text-yellow-600">{stats.avgIf}</p>
         </div>
       </div>
 
       {/* PMC Chart */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-cycling-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <TrendingUp className="w-5 h-5 text-cycling-600" />
           Performance Management Chart
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={pmcData.slice(-90)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-            <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
-            <YAxis stroke="#9ca3af" fontSize={12} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+            <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
+            <YAxis stroke="#6b7280" fontSize={12} />
             <Tooltip 
-              contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
               labelStyle={{ color: '#fff' }}
             />
             <Area type="monotone" dataKey="CTL" stroke="#22c55e" fill="#22c55e" fillOpacity={0.2} strokeWidth={2} name="CTL (Fitness)" />
@@ -153,17 +153,17 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Weekly TSS */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Flame className="w-5 h-5 text-orange-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Flame className="w-5 h-5 text-orange-600" />
             Weekly Training Load (TSS)
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={weeklyTssData.slice(-12)}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="date" stroke="#9ca3af" fontSize={12} />
-              <YAxis stroke="#9ca3af" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
+              <YAxis stroke="#6b7280" fontSize={12} />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 labelStyle={{ color: '#fff' }}
               />
               <Bar dataKey="tss" fill="#22c55e" radius={[4, 4, 0, 0]} />
@@ -173,17 +173,17 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
 
         {/* Zone Distribution */}
         <div className="card">
-          <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-yellow-400" />
+          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+            <Zap className="w-5 h-5 text-yellow-600" />
             Time in Power Zones
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={zoneData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="zone" stroke="#9ca3af" fontSize={12} />
-              <YAxis stroke="#9ca3af" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="zone" stroke="#6b7280" fontSize={12} />
+              <YAxis stroke="#6b7280" fontSize={12} />
               <Tooltip 
-                contentStyle={{ backgroundColor: '#1f2937', border: '1px solid #374151', borderRadius: '8px' }}
+                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 labelStyle={{ color: '#fff' }}
               />
               <Bar dataKey="hours" radius={[4, 4, 0, 0]}>
@@ -198,14 +198,14 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
 
       {/* Recent Workouts Table */}
       <div className="card">
-        <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-cycling-400" />
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <Activity className="w-5 h-5 text-cycling-600" />
           Recent Workouts
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800 text-gray-400">
+              <tr className="border-b border-gray-200 text-gray-500">
                 <th className="text-left py-2">Date</th>
                 <th className="text-left py-2">Title</th>
                 <th className="text-left py-2">Type</th>
@@ -217,18 +217,18 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
             </thead>
             <tbody>
               {workouts.slice(-10).reverse().map(w => (
-                <tr key={w.id} className="border-b border-gray-800/50 hover:bg-gray-800/30">
-                  <td className="py-2 text-gray-300">{w.date.toLocaleDateString()}</td>
-                  <td className="py-2 text-white font-medium">{w.title}</td>
+                <tr key={w.id} className="border-b border-gray-200/50 hover:bg-gray-100/50">
+                  <td className="py-2 text-gray-400">{w.date.toLocaleDateString()}</td>
+                  <td className="py-2 text-gray-900 font-medium">{w.title}</td>
                   <td className="py-2">
-                    <span className="px-2 py-1 rounded-md text-xs font-medium bg-gray-800 text-gray-300">
+                    <span className="px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-400">
                       {w.type}
                     </span>
                   </td>
-                  <td className="py-2 text-right text-gray-300">{w.duration}min</td>
-                  <td className="py-2 text-right text-cycling-400 font-medium">{w.tss}</td>
-                  <td className="py-2 text-right text-gray-300">{w.np}W</td>
-                  <td className="py-2 text-right text-gray-300">{w.if.toFixed(2)}</td>
+                  <td className="py-2 text-right text-gray-400">{w.duration}min</td>
+                  <td className="py-2 text-right text-cycling-600 font-medium">{w.tss}</td>
+                  <td className="py-2 text-right text-gray-400">{w.np}W</td>
+                  <td className="py-2 text-right text-gray-400">{w.if.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>

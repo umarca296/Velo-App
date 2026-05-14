@@ -39,8 +39,8 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
       onClick={() => onChange(value)}
       className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${
         current === value
-          ? `${color} text-white scale-110`
-          : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+          ? `${color} text-gray-900 scale-110`
+          : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
       }`}
     >
       {value}
@@ -50,14 +50,14 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
   const ScoreRow = ({ icon: Icon, label, value, onChange, color, description }: {
     icon: any; label: string; value: number; onChange: (v: number) => void; color: string; description: string;
   }) => (
-    <div className="flex items-center gap-4 py-3 border-b border-gray-800 last:border-0">
+    <div className="flex items-center gap-4 py-3 border-b border-gray-200 last:border-0">
       <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color} bg-opacity-20`}>
         <Icon className={`w-5 h-5 ${color.replace('bg-', 'text-')}`} />
       </div>
       <div className="flex-1">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-sm font-medium text-white">{label}</span>
-          <span className="text-xs text-gray-400">{description}</span>
+          <span className="text-sm font-medium text-gray-900">{label}</span>
+          <span className="text-xs text-gray-500">{description}</span>
         </div>
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map(v => (
@@ -70,11 +70,11 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
 
   return (
     <div className="card max-w-2xl mx-auto">
-      <h3 className="text-lg font-semibold text-white mb-1 flex items-center gap-2">
-        <Heart className="w-5 h-5 text-red-400" />
+      <h3 className="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
+        <Heart className="w-5 h-5 text-red-600" />
         Daily Wellness Check
       </h3>
-      <p className="text-sm text-gray-400 mb-4">Rate how you're feeling today (1 = poor, 5 = excellent)</p>
+      <p className="text-sm text-gray-500 mb-4">Rate how you're feeling today (1 = poor, 5 = excellent)</p>
 
       <ScoreRow
         icon={Zap}
@@ -119,25 +119,25 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
 
       <div className="mt-4 flex items-center gap-4">
         <div className="flex-1">
-          <label className="text-sm text-gray-400 block mb-1">Sleep Hours</label>
+          <label className="text-sm text-gray-500 block mb-1">Sleep Hours</label>
           <input
             type="number"
             value={sleepHours}
             onChange={(e) => setSleepHours(e.target.value)}
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm"
+            className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-sm"
             step="0.5"
             min="0"
             max="24"
           />
         </div>
         <div className="flex-[2]">
-          <label className="text-sm text-gray-400 block mb-1">Notes (optional)</label>
+          <label className="text-sm text-gray-500 block mb-1">Notes (optional)</label>
           <input
             type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any aches, issues, etc."
-            className="w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm"
+            className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-sm"
           />
         </div>
       </div>
@@ -146,7 +146,7 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
         onClick={handleSubmit}
         className={`mt-4 w-full py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
           submitted
-            ? 'bg-cycling-500 text-white'
+            ? 'bg-cycling-500 text-gray-900'
             : 'bg-cycling-600 hover:bg-cycling-500 text-white'
         }`}
       >
