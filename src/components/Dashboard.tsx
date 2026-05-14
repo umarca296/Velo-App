@@ -3,16 +3,18 @@ import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   BarChart, Bar, Cell, Legend
 } from 'recharts';
-import { TrendingUp, Activity, Flame, Zap } from 'lucide-react';
-import { Workout, FitnessMetrics, AthleteProfile } from '../types';
+import { calculateReadiness, getWellnessTrend } from '../utils/wellness';
+import { TrendingUp, Activity, Flame, Zap, Heart, Smile, Frown, Battery, Brain, BedDouble } from 'lucide-react';
+import { Workout, FitnessMetrics, AthleteProfile, WellnessEntry } from '../types';
 
 interface DashboardProps {
   workouts: Workout[];
   metrics: FitnessMetrics[];
   athlete: AthleteProfile;
+  wellnessEntries?: WellnessEntry[];
 }
 
-export default function Dashboard({ workouts, metrics, athlete }: DashboardProps) {
+export default function Dashboard({ workouts, metrics, athlete, wellnessEntries = [] }: DashboardProps) {
   const stats = useMemo(() => {
     const totalTss = workouts.reduce((sum, w) => sum + w.tss, 0);
     const totalHours = workouts.reduce((sum, w) => sum + w.duration, 0) / 60;
@@ -94,6 +96,26 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
     'Z6': '#a78bfa',
   };
 
+  // Wellness trend data
+  const wellnessChartData = useMemo(() => {
+    if (!wellnessEntries.length) return [];
+    return wellnessEntries.slice(-14).map(e => {
+      const readiness = calculateReadiness(e);
+      return {
+        date: e.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        readiness: readiness.score,
+        motivation: e.motivation,
+        soreness: e.muscleSoreness,
+        stress: e.lifeStress,
+        fatigue: e.fatigueLevel,
+        sleep: e.sleepQuality,
+      };
+    });
+  }, [wellnessEntries]);
+
+  const { trend } = getWellnessTrend(wellnessEntries);
+  const latestWellness = wellnessEntries[wellnessEntries.length - 1];
+
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
@@ -125,6 +147,117 @@ export default function Dashboard({ workouts, metrics, athlete }: DashboardProps
           <p className="stat-value text-yellow-600">{stats.avgIf}</p>
         </div>
       </div>
+
+      {/* Wellness Summary */}
+      {wellnessEntries.length > 0 && (
+        <div className="card">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+              <Heart className="w-5 h-5 text-red-600" />
+              Wellness Check-ins
+            </h3>
+            <span className="text-sm text-gray-500">{wellnessEntries.length} entries</span>
+          </div>
+          
+          {/* Latest Check-in Cards */}
+          {latestWellness && (
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Smile className="w-4 h-4 text-yellow-600" />
+                  <span className="text-xs text-gray-500">Motivation</span>
+                </div>
+                <p className="text-xl font-bold text-gray-900">{latestWellness.motivation}/10</p>
+              </div>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Battery className="w-4 h-4 text-orange-600" />
+                  <span className="text-xs text-gray-500">Soreness</span>
+                </div>
+                <p className="text-xl font-bold text-gray-900">{latestWellness.muscleSoreness}/10</p>
+              </div>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Brain className="w-4 h-4 text-purple-600" />
+                  <span className="text-xs text-gray-500">Stress</span>
+                </div>
+                <p className="text-xl font-bold text-gray-900">{latestWellness.lifeStress}/10</p>
+              </div>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <Frown className="w-4 h-4 text-blue-600" />
+                  <span className="text-xs text-gray-500">Fatigue</span>
+                </div>
+                <p className="text-xl font-bold text-gray-900">{latestWellness.fatigueLevel}/10</p>
+              </div>
+              <div className="bg-gray-100 rounded-lg p-3 text-center">
+                <div className="flex items-center justify-center gap-1 mb-1">
+                  <BedDouble className="w-4 h-4 text-indigo-600" />
+                  <span className="text-xs text-gray-500">Sleep</span>
+                </div>
+                <p className="text-xl font-bold text-gray-900">{latestWellness.sleepQuality}/10</p>
+              </div>
+            </div>
+          )}
+
+          {/* Wellness Trend Mini-Chart */}
+          {wellnessChartData.length > 1 && (
+            <div>
+              <p className="text-sm text-gray-500 mb-2">Readiness Trend ({trend})</p>
+              <ResponsiveContainer width="100%" height={180}>
+                <AreaChart data={wellnessChartData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                  <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
+                  <YAxis stroke="#6b7280" fontSize={11} domain={[0, 25]} />
+                  <Tooltip 
+                    contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
+                    labelStyle={{ color: '#111827' }}
+                    formatter={(value: number) => [`${value}/25`, 'Readiness']}
+                  />
+                  <Area type="monotone" dataKey="readiness" stroke="#22c55e" fill="#22c55e" fillOpacity={0.15} strokeWidth={2} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+
+          {/* Check-in History Table */}
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-200 text-gray-500">
+                  <th className="text-left py-2">Date</th>
+                  <th className="text-center py-2">Motivation</th>
+                  <th className="text-center py-2">Soreness</th>
+                  <th className="text-center py-2">Stress</th>
+                  <th className="text-center py-2">Fatigue</th>
+                  <th className="text-center py-2">Sleep</th>
+                  <th className="text-right py-2">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {wellnessEntries.slice(-7).reverse().map(e => {
+                  const r = calculateReadiness(e);
+                  return (
+                    <tr key={e.id} className="border-b border-gray-200/50 hover:bg-gray-50">
+                      <td className="py-2 text-gray-400">{e.date.toLocaleDateString()}</td>
+                      <td className="py-2 text-center text-gray-900">{e.motivation}</td>
+                      <td className="py-2 text-center text-gray-900">{e.muscleSoreness}</td>
+                      <td className="py-2 text-center text-gray-900">{e.lifeStress}</td>
+                      <td className="py-2 text-center text-gray-900">{e.fatigueLevel}</td>
+                      <td className="py-2 text-center text-gray-900">{e.sleepQuality}</td>
+                      <td className="py-2 text-right">
+                        <span className={`font-medium ${r.readiness === 'high' ? 'text-cycling-600' : r.readiness === 'moderate' ? 'text-yellow-600' : 'text-orange-600'}`}>
+                          {r.score}/25
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* PMC Chart */}
       <div className="card">

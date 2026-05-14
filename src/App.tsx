@@ -114,7 +114,7 @@ export default function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
         {activeTab === 'stats' && <StatsView workouts={workouts} metrics={metrics} athlete={urosProfile} wellnessEntries={wellnessEntries} />}
-        {activeTab === 'dashboard' && <Dashboard workouts={workouts} metrics={metrics} athlete={urosProfile} />}
+        {activeTab === 'dashboard' && <Dashboard workouts={workouts} metrics={metrics} athlete={urosProfile} wellnessEntries={wellnessEntries} />}
         {activeTab === 'plan' && <TrainingPlanView athlete={urosProfile} metrics={metrics} wellnessEntries={wellnessEntries} />}
         {activeTab === 'wellness' && (
           <div className="space-y-6">
