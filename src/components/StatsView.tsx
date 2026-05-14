@@ -336,13 +336,14 @@ export default function StatsView({ workouts, metrics, athlete, wellnessEntries 
             <BarChart data={weeklyTrend}>
               <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
               <XAxis dataKey="week" stroke="#6b7280" fontSize={11} />
-              <YAxis stroke="#6b7280" fontSize={11} />
+              <YAxis yAxisId="left" stroke="#6b7280" fontSize={11} />
+              <YAxis yAxisId="right" orientation="right" stroke="#6b7280" fontSize={11} />
               <Tooltip
                 contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                labelStyle={{ color: '#fff' }}
+                labelStyle={{ color: '#111827' }}
               />
-              <Bar dataKey="hours" fill="#60a5fa" radius={[4, 4, 0, 0]} name="Hours" />
-              <Bar dataKey="tss" fill="#22c55e" radius={[4, 4, 0, 0]} name="TSS" yAxisId={1} />
+              <Bar yAxisId="left" dataKey="hours" fill="#60a5fa" radius={[4, 4, 0, 0]} name="Hours" />
+              <Bar yAxisId="right" dataKey="tss" fill="#22c55e" radius={[4, 4, 0, 0]} name="TSS" />
             </BarChart>
           </ResponsiveContainer>
         </div>
