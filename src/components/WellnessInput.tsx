@@ -37,10 +37,10 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
   const ScoreButton = ({ value, current, onChange, color }: { value: number; current: number; onChange: (v: number) => void; color: string }) => (
     <button
       onClick={() => onChange(value)}
-      className={`w-10 h-10 rounded-lg font-bold text-sm transition-all ${
+      className={`w-10 h-10 font-medium text-sm transition-all ${
         current === value
-          ? `${color} text-gray-900 scale-110`
-          : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+          ? `${color} bg-cream-200 scale-110`
+          : 'bg-cream-100 text-warmgray-400 hover:bg-cream-200 border border-warmgray-200'
       }`}
     >
       {value}
@@ -50,14 +50,14 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
   const ScoreRow = ({ icon: Icon, label, value, onChange, color, description }: {
     icon: any; label: string; value: number; onChange: (v: number) => void; color: string; description: string;
   }) => (
-    <div className="flex items-center gap-4 py-3 border-b border-gray-200 last:border-0">
-      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${color} bg-opacity-20`}>
-        <Icon className={`w-5 h-5 ${color.replace('bg-', 'text-')}`} />
+    <div className="flex items-center gap-4 py-4 border-b border-warmgray-200 last:border-0">
+      <div className={`w-10 h-10 border border-warmgray-200 flex items-center justify-center ${color}`}>
+        <Icon className={`w-5 h-5 ${color.replace('text-', 'text-')}`} strokeWidth={1.5} />
       </div>
       <div className="flex-1">
         <div className="flex items-center justify-between mb-1">
-          <span className="text-sm font-medium text-gray-900">{label}</span>
-          <span className="text-xs text-gray-500">{description}</span>
+          <span className="text-sm font-medium text-warmgray-900">{label}</span>
+          <span className="text-xs text-warmgray-400">{description}</span>
         </div>
         <div className="flex gap-2">
           {[1, 2, 3, 4, 5].map(v => (
@@ -70,18 +70,21 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
 
   return (
     <div className="card max-w-2xl mx-auto">
-      <h3 className="text-lg font-semibold text-gray-900 mb-1 flex items-center gap-2">
-        <Heart className="w-5 h-5 text-red-600" />
-        Daily Wellness Check
-      </h3>
-      <p className="text-sm text-gray-500 mb-4">Rate how you're feeling today (1 = poor, 5 = excellent)</p>
+      <div className="mb-5">
+        <div className="accent-line" />
+        <h3 className="section-title !mb-0 flex items-center gap-2">
+          <Heart className="w-5 h-5 text-terracotta-500" strokeWidth={1.5} />
+          Daily Wellness Check
+        </h3>
+        <p className="text-sm text-warmgray-500 font-serif italic">Rate how you're feeling today (1 = poor, 5 = excellent)</p>
+      </div>
 
       <ScoreRow
         icon={Zap}
         label="Motivation"
         value={motivation}
         onChange={setMotivation}
-        color="bg-yellow-500"
+        color="text-terracotta-500"
         description="Ready to train?"
       />
       <ScoreRow
@@ -89,7 +92,7 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
         label="Muscle Soreness"
         value={muscleSoreness}
         onChange={setMuscleSoreness}
-        color="bg-orange-500"
+        color="text-violet-500"
         description="1 = fresh, 5 = very sore"
       />
       <ScoreRow
@@ -97,7 +100,7 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
         label="Life Stress"
         value={lifeStress}
         onChange={setLifeStress}
-        color="bg-purple-500"
+        color="text-emerald-600"
         description="Work/life pressure"
       />
       <ScoreRow
@@ -105,7 +108,7 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
         label="Fatigue Level"
         value={fatigueLevel}
         onChange={setFatigueLevel}
-        color="bg-blue-500"
+        color="text-sky-600"
         description="Physical tiredness"
       />
       <ScoreRow
@@ -113,41 +116,41 @@ export default function WellnessInput({ onSubmit, lastEntry }: WellnessInputProp
         label="Sleep Quality"
         value={sleepQuality}
         onChange={setSleepQuality}
-        color="bg-indigo-500"
+        color="text-amber-600"
         description="How well did you sleep?"
       />
 
       <div className="mt-4 flex items-center gap-4">
         <div className="flex-1">
-          <label className="text-sm text-gray-500 block mb-1">Sleep Hours</label>
+          <label className="text-sm text-warmgray-500 block mb-1 tracking-wide">Sleep Hours</label>
           <input
             type="number"
             value={sleepHours}
             onChange={(e) => setSleepHours(e.target.value)}
-            className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-sm"
+            className="w-full bg-cream-100 border border-warmgray-200 px-3 py-2 text-warmgray-900 text-sm focus:border-terracotta-400 focus:outline-none transition-colors"
             step="0.5"
             min="0"
             max="24"
           />
         </div>
         <div className="flex-[2]">
-          <label className="text-sm text-gray-500 block mb-1">Notes (optional)</label>
+          <label className="text-sm text-warmgray-500 block mb-1 tracking-wide">Notes (optional)</label>
           <input
             type="text"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="Any aches, issues, etc."
-            className="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 text-sm"
+            className="w-full bg-cream-100 border border-warmgray-200 px-3 py-2 text-warmgray-900 text-sm focus:border-terracotta-400 focus:outline-none transition-colors"
           />
         </div>
       </div>
 
       <button
         onClick={handleSubmit}
-        className={`mt-4 w-full py-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 ${
+        className={`mt-6 w-full py-3 font-medium transition-all flex items-center justify-center gap-2 tracking-wide ${
           submitted
-            ? 'bg-cycling-500 text-gray-900'
-            : 'bg-cycling-600 hover:bg-cycling-500 text-white'
+            ? 'bg-emerald-700 text-white'
+            : 'bg-warmgray-900 hover:bg-terracotta-600 text-white'
         }`}
       >
         {submitted ? (

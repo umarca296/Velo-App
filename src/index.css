@@ -1,53 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 font-display;
+    @apply bg-cream-100 text-warmgray-800 font-display antialiased;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+  
+  h1, h2, h3, h4 {
+    @apply font-serif;
   }
 }
 
 @layer components {
+  /* ── Elegant Cards ── */
   .card {
-    @apply bg-white rounded-2xl border border-gray-100 p-5 shadow-sm;
+    @apply bg-white rounded-none border border-warmgray-200 p-6;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-md hover:border-primary-200;
+    @apply transition-all duration-500;
   }
   
+  .card-hover:hover {
+    @apply border-terracotta-300;
+  }
+  
+  /* ── Section Title (editorial style) ── */
+  .section-title {
+    @apply text-xl font-serif font-semibold text-warmgray-900 mb-5 tracking-tight;
+  }
+  
+  /* ── Stat Values ── */
   .stat-value {
-    @apply text-3xl font-bold text-gray-900;
+    @apply text-4xl font-serif font-medium text-warmgray-900 tracking-tight;
   }
   
   .stat-label {
-    @apply text-sm text-gray-500 uppercase tracking-wider font-medium;
+    @apply text-xs font-medium text-warmgray-500 uppercase tracking-[0.15em];
   }
   
-  .zone-badge {
-    @apply px-2 py-1 rounded-lg text-xs font-medium;
+  /* ── Big Number Display (reference site style) ── */
+  .big-number {
+    @apply text-5xl md:text-6xl font-serif font-medium text-warmgray-900 leading-none tracking-tight;
   }
   
+  .big-number-label {
+    @apply text-sm font-medium text-warmgray-500 mt-2 tracking-wide;
+  }
+  
+  /* ── Buttons ── */
   .btn-primary {
-    @apply px-5 py-2.5 bg-primary-600 text-white rounded-xl font-semibold 
-           hover:bg-primary-700 transition-colors shadow-sm;
+    @apply px-6 py-3 bg-warmgray-900 text-cream-50 font-medium 
+           hover:bg-terracotta-600 transition-all duration-300 tracking-wide text-sm;
   }
   
   .btn-accent {
-    @apply px-5 py-2.5 bg-accent-500 text-white rounded-xl font-semibold 
-           hover:bg-accent-600 transition-colors shadow-sm;
+    @apply px-6 py-3 bg-terracotta-500 text-white font-medium 
+           hover:bg-terracotta-600 transition-all duration-300 tracking-wide text-sm;
   }
   
-  .section-title {
-    @apply text-xl font-bold text-gray-900 mb-4;
+  .btn-ghost {
+    @apply px-6 py-3 border border-warmgray-300 text-warmgray-700 font-medium 
+           hover:border-terracotta-400 hover:text-terracotta-600 
+           transition-all duration-300 tracking-wide text-sm;
   }
   
+  /* ── Zone Badges ── */
+  .zone-badge {
+    @apply px-3 py-1 text-xs font-medium tracking-wide;
+  }
+  
+  /* ── Thin Divider ── */
+  .divider {
+    @apply border-t border-warmgray-200;
+  }
+  
+  .divider-thin {
+    @apply border-t border-warmgray-100;
+  }
+  
+  /* ── Hero Gradient (warm, editorial) ── */
   .gradient-hero {
-    background: linear-gradient(135deg, #6B2C91 0%, #9a6dff 100%);
+    background: linear-gradient(160deg, #3D1957 0%, #6B2C91 40%, #8F4CBF 100%);
   }
   
-  .gradient-accent {
-    background: linear-gradient(135deg, #E8774B 0%, #ff8f5c 100%);
+  .gradient-hero-terracotta {
+    background: linear-gradient(160deg, #5C2818 0%, #C75B3A 60%, #E9A08A 100%);
+  }
+  
+  /* ── Subtle accent line ── */
+  .accent-line {
+    @apply w-12 h-0.5 bg-terracotta-500 mb-4;
+  }
+  
+  /* ── Nav Link ── */
+  .nav-link {
+    @apply px-5 py-4 text-sm font-medium tracking-wide text-warmgray-500 
+           border-b-2 border-transparent transition-all duration-300;
+  }
+  
+  .nav-link-active {
+    @apply border-warmgray-900 text-warmgray-900;
+  }
+  
+  .nav-link:hover:not(.nav-link-active) {
+    @apply text-warmgray-700;
+  }
+  
+  /* ── Table Styles ── */
+  .table-elegant {
+    @apply w-full text-sm;
+  }
+  
+  .table-elegant thead tr {
+    @apply border-b border-warmgray-200;
+  }
+  
+  .table-elegant th {
+    @apply text-left py-3 text-xs font-medium text-warmgray-500 uppercase tracking-[0.15em] pb-3;
+  }
+  
+  .table-elegant tbody tr {
+    @apply border-b border-warmgray-100 transition-colors duration-200;
+  }
+  
+  .table-elegant tbody tr:hover {
+    @apply bg-cream-50;
+  }
+  
+  .table-elegant td {
+    @apply py-3 text-warmgray-700;
+  }
+  
+  /* ── Data Grid (reference site number style) ── */
+  .data-grid-item {
+    @apply text-center p-6 border border-warmgray-200 bg-white;
+  }
+  
+  /* ── Quote / Caption ── */
+  .caption {
+    @apply text-sm italic text-warmgray-500 font-serif;
   }
 }

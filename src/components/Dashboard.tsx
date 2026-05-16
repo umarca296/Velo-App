@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
 import {
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  BarChart, Bar, Cell, Legend
+  BarChart, Bar, Cell
 } from 'recharts';
 import { calculateReadiness, getWellnessTrend } from '../utils/wellness';
-import { TrendingUp, Activity, Flame, Zap, Heart, Smile, Frown, Battery, Brain, BedDouble } from 'lucide-react';
+import { Smile, Frown, Battery, Brain, BedDouble } from 'lucide-react';
 import { Workout, FitnessMetrics, AthleteProfile, WellnessEntry } from '../types';
 
 interface DashboardProps {
@@ -21,15 +21,15 @@ export default function Dashboard({ workouts, metrics, athlete, wellnessEntries 
     const totalDistance = workouts.reduce((sum, w) => sum + w.distance, 0);
     const totalElevation = workouts.reduce((sum, w) => sum + w.elevation, 0);
     const avgIf = workouts.reduce((sum, w) => sum + w.if, 0) / workouts.length;
-    
+
     const now = new Date();
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     const thisWeekWorkouts = workouts.filter(w => w.date >= weekAgo);
     const weeklyTss = thisWeekWorkouts.reduce((sum, w) => sum + w.tss, 0);
     const weeklyHours = thisWeekWorkouts.reduce((sum, w) => sum + w.duration, 0) / 60;
-    
+
     const latest = metrics[metrics.length - 1];
-    
+
     return {
       totalWorkouts: workouts.length,
       totalTss,
@@ -83,12 +83,12 @@ export default function Dashboard({ workouts, metrics, athlete, wellnessEntries 
   }, [workouts, athlete.ftp]);
 
   const zoneColors: Record<string, string> = {
-    'Z1': '#94a3b8',
-    'Z2': '#60a5fa',
-    'Z3': '#34d399',
-    'Z4': '#fbbf24',
-    'Z5': '#f87171',
-    'Z6': '#a78bfa',
+    'Z1': '#B5B0A6',
+    'Z2': '#7BAFD4',
+    'Z3': '#6BBF9A',
+    'Z4': '#D4A843',
+    'Z5': '#D97D5F',
+    'Z6': '#A970D0',
   };
 
   const wellnessChartData = useMemo(() => {
@@ -111,133 +111,104 @@ export default function Dashboard({ workouts, metrics, athlete, wellnessEntries 
   const latestWellness = wellnessEntries[wellnessEntries.length - 1];
 
   return (
-    <div className="space-y-6">
-      {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <div className="card card-hover">
-          <p className="stat-label">Fitness (CTL)</p>
-          <p className="stat-value text-primary-600">{stats.ctl}</p>
-        </div>
-        <div className="card card-hover">
-          <p className="stat-label">Fatigue (ATL)</p>
-          <p className="stat-value text-accent-500">{stats.atl}</p>
-        </div>
-        <div className="card card-hover">
-          <p className="stat-label">Form (TSB)</p>
-          <p className={`stat-value ${stats.tsb > 0 ? 'text-primary-600' : 'text-accent-500'}`}>
-            {stats.tsb}
-          </p>
-        </div>
-        <div className="card card-hover">
-          <p className="stat-label">Weekly TSS</p>
-          <p className="stat-value text-blue-500">{stats.weeklyTss}</p>
-        </div>
-        <div className="card card-hover">
-          <p className="stat-label">Weekly Hours</p>
-          <p className="stat-value text-primary-500">{stats.weeklyHours}h</p>
-        </div>
-        <div className="card card-hover">
-          <p className="stat-label">Intensity Factor</p>
-          <p className="stat-value text-accent-400">{stats.avgIf}</p>
-        </div>
+    <div className="space-y-10">
+      {/* ── Big Number Hero Grid (reference site style) ── */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-0">
+        {[
+          { label: 'Fitness', value: stats.ctl, unit: 'CTL', color: 'text-violet-700' },
+          { label: 'Fatigue', value: stats.atl, unit: 'ATL', color: 'text-terracotta-600' },
+          { label: 'Form', value: stats.tsb > 0 ? `+${stats.tsb}` : stats.tsb, unit: 'TSB', color: stats.tsb > 0 ? 'text-emerald-600' : 'text-amber-600' },
+          { label: 'Weekly TSS', value: stats.weeklyTss, unit: 'pts', color: 'text-warmgray-900' },
+          { label: 'Hours', value: stats.weeklyHours, unit: 'h', color: 'text-warmgray-900' },
+          { label: 'Intensity', value: stats.avgIf, unit: 'IF', color: 'text-warmgray-900' },
+        ].map((stat, i) => (
+          <div key={stat.label} className={`data-grid-item ${i > 0 ? 'border-l-0' : ''}`}>
+            <div className="big-number-label">{stat.label}</div>
+            <div className={`big-number mt-3 ${stat.color}`}>{stat.value}</div>
+            <div className="text-xs text-warmgray-400 mt-2 tracking-wider uppercase">{stat.unit}</div>
+          </div>
+        ))}
       </div>
 
-      {/* Wellness Summary */}
+      {/* ── Wellness Section ── */}
       {wellnessEntries.length > 0 && (
-        <div className="card">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
-              <Heart className="w-5 h-5 text-accent-500" />
-              Wellness Check-ins
-            </h3>
-            <span className="text-sm text-gray-500">{wellnessEntries.length} entries</span>
+        <section>
+          <div className="flex items-baseline justify-between mb-6">
+            <div>
+              <div className="accent-line" />
+              <h2 className="section-title !mb-0">Wellness Check-ins</h2>
+            </div>
+            <span className="text-sm text-warmgray-500 tracking-wide">{wellnessEntries.length} entries</span>
           </div>
-          
+
           {latestWellness && (
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Smile className="w-4 h-4 text-accent-500" />
-                  <span className="text-xs text-gray-500">Motivation</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">{latestWellness.motivation}/10</p>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Battery className="w-4 h-4 text-accent-600" />
-                  <span className="text-xs text-gray-500">Soreness</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">{latestWellness.muscleSoreness}/10</p>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Brain className="w-4 h-4 text-primary-600" />
-                  <span className="text-xs text-gray-500">Stress</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">{latestWellness.lifeStress}/10</p>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <Frown className="w-4 h-4 text-primary-500" />
-                  <span className="text-xs text-gray-500">Fatigue</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">{latestWellness.fatigueLevel}/10</p>
-              </div>
-              <div className="bg-gray-100 rounded-lg p-3 text-center">
-                <div className="flex items-center justify-center gap-1 mb-1">
-                  <BedDouble className="w-4 h-4 text-primary-400" />
-                  <span className="text-xs text-gray-500">Sleep</span>
-                </div>
-                <p className="text-xl font-bold text-gray-900">{latestWellness.sleepQuality}/10</p>
-              </div>
+            <div className="grid grid-cols-5 gap-0 mb-6">
+              {[
+                { label: 'Motivation', value: latestWellness.motivation, icon: Smile, color: 'border-terracotta-400' },
+                { label: 'Soreness', value: latestWellness.muscleSoreness, icon: Battery, color: 'border-violet-400' },
+                { label: 'Stress', value: latestWellness.lifeStress, icon: Brain, color: 'border-emerald-400' },
+                { label: 'Fatigue', value: latestWellness.fatigueLevel, icon: Frown, color: 'border-amber-400' },
+                { label: 'Sleep', value: latestWellness.sleepQuality, icon: BedDouble, color: 'border-sky-400' },
+              ].map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <div key={item.label} className={`bg-white p-6 border border-warmgray-200 ${i > 0 ? 'border-l-0' : ''} ${item.color} border-t-4`}>
+                    <div className="flex items-center gap-2 mb-3">
+                      <Icon className="w-4 h-4 text-warmgray-500" strokeWidth={1.5} />
+                      <span className="text-xs text-warmgray-500 uppercase tracking-wider">{item.label}</span>
+                    </div>
+                    <div className="text-3xl font-serif font-medium text-warmgray-900">{item.value}<span className="text-base text-warmgray-400 ml-1">/10</span></div>
+                  </div>
+                );
+              })}
             </div>
           )}
 
           {wellnessChartData.length > 1 && (
-            <div>
-              <p className="text-sm text-gray-500 mb-2">Readiness Trend ({trend})</p>
+            <div className="card">
+              <p className="text-sm text-warmgray-500 mb-4 font-serif italic">Readiness Trend — {trend}</p>
               <ResponsiveContainer width="100%" height={180}>
                 <AreaChart data={wellnessChartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                  <XAxis dataKey="date" stroke="#6b7280" fontSize={11} />
-                  <YAxis stroke="#6b7280" fontSize={11} domain={[0, 25]} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                    labelStyle={{ color: '#111827' }}
+                  <CartesianGrid strokeDasharray="3 6" stroke="#E2E0DA" vertical={false} />
+                  <XAxis dataKey="date" stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+                  <YAxis stroke="#B5B0A6" fontSize={11} domain={[0, 25]} tickLine={false} axisLine={false} />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#FDFCFA', border: '1px solid #D1CEC6', borderRadius: '0', fontFamily: 'Inter' }}
+                    labelStyle={{ color: '#3D3A35', fontFamily: 'Playfair Display' }}
                     formatter={(value: number) => [`${value}/25`, 'Readiness']}
                   />
-                  <Area type="monotone" dataKey="readiness" stroke="#6B2C91" fill="#6B2C91" fillOpacity={0.15} strokeWidth={2} />
+                  <Area type="monotone" dataKey="readiness" stroke="#6B2C91" fill="#6B2C91" fillOpacity={0.1} strokeWidth={2} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
           )}
 
-          <div className="mt-4 overflow-x-auto">
-            <table className="w-full text-sm">
+          <div className="mt-6 overflow-x-auto">
+            <table className="table-elegant">
               <thead>
-                <tr className="border-b border-gray-200 text-gray-500">
-                  <th className="text-left py-2">Date</th>
-                  <th className="text-center py-2">Motivation</th>
-                  <th className="text-center py-2">Soreness</th>
-                  <th className="text-center py-2">Stress</th>
-                  <th className="text-center py-2">Fatigue</th>
-                  <th className="text-center py-2">Sleep</th>
-                  <th className="text-right py-2">Score</th>
+                <tr>
+                  <th>Date</th>
+                  <th className="text-center">Motivation</th>
+                  <th className="text-center">Soreness</th>
+                  <th className="text-center">Stress</th>
+                  <th className="text-center">Fatigue</th>
+                  <th className="text-center">Sleep</th>
+                  <th className="text-right">Score</th>
                 </tr>
               </thead>
               <tbody>
                 {wellnessEntries.slice(-7).reverse().map(e => {
                   const r = calculateReadiness(e);
                   return (
-                    <tr key={e.id} className="border-b border-gray-200/50 hover:bg-gray-50">
-                      <td className="py-2 text-gray-400">{e.date.toLocaleDateString()}</td>
-                      <td className="py-2 text-center text-gray-900">{e.motivation}</td>
-                      <td className="py-2 text-center text-gray-900">{e.muscleSoreness}</td>
-                      <td className="py-2 text-center text-gray-900">{e.lifeStress}</td>
-                      <td className="py-2 text-center text-gray-900">{e.fatigueLevel}</td>
-                      <td className="py-2 text-center text-gray-900">{e.sleepQuality}</td>
-                      <td className="py-2 text-right">
-                        <span className={`font-medium ${r.readiness === 'high' ? 'text-primary-600' : r.readiness === 'moderate' ? 'text-accent-500' : 'text-accent-600'}`}>
+                    <tr key={e.id}>
+                      <td className="text-warmgray-500">{e.date.toLocaleDateString()}</td>
+                      <td className="text-center text-warmgray-900">{e.motivation}</td>
+                      <td className="text-center text-warmgray-900">{e.muscleSoreness}</td>
+                      <td className="text-center text-warmgray-900">{e.lifeStress}</td>
+                      <td className="text-center text-warmgray-900">{e.fatigueLevel}</td>
+                      <td className="text-center text-warmgray-900">{e.sleepQuality}</td>
+                      <td className="text-right">
+                        <span className={`font-medium ${r.readiness === 'high' ? 'text-emerald-600' : r.readiness === 'moderate' ? 'text-amber-600' : 'text-terracotta-600'}`}>
                           {r.score}/25
                         </span>
                       </td>
@@ -247,116 +218,113 @@ export default function Dashboard({ workouts, metrics, athlete, wellnessEntries 
               </tbody>
             </table>
           </div>
-        </div>
+        </section>
       )}
 
-      {/* PMC Chart */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-primary-600" />
-          Performance Management Chart
-        </h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <AreaChart data={pmcData.slice(-90)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-            <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-            <YAxis stroke="#6b7280" fontSize={12} />
-            <Tooltip 
-              contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-              labelStyle={{ color: '#111827' }}
-            />
-            <Area type="monotone" dataKey="CTL" stroke="#6B2C91" fill="#6B2C91" fillOpacity={0.2} strokeWidth={2} name="CTL (Fitness)" />
-            <Area type="monotone" dataKey="ATL" stroke="#E8774B" fill="#E8774B" fillOpacity={0.2} strokeWidth={2} name="ATL (Fatigue)" />
-            <Area type="monotone" dataKey="TSB" stroke="#60a5fa" fill="#60a5fa" fillOpacity={0.1} strokeWidth={2} name="TSB (Form)" />
-            <Legend />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* ── PMC Chart ── */}
+      <section>
+        <div className="accent-line" />
+        <h2 className="section-title">Performance Management Chart</h2>
         <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Flame className="w-5 h-5 text-accent-500" />
-            Weekly Training Load (TSS)
-          </h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={weeklyTssData.slice(-12)}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-              <YAxis stroke="#6b7280" fontSize={12} />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                labelStyle={{ color: '#111827' }}
+          <ResponsiveContainer width="100%" height={320}>
+            <AreaChart data={pmcData.slice(-90)}>
+              <CartesianGrid strokeDasharray="3 6" stroke="#E2E0DA" vertical={false} />
+              <XAxis dataKey="date" stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+              <YAxis stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+              <Tooltip
+                contentStyle={{ backgroundColor: '#FDFCFA', border: '1px solid #D1CEC6', borderRadius: '0' }}
+                labelStyle={{ color: '#3D3A35', fontFamily: 'Playfair Display' }}
               />
-              <Bar dataKey="tss" fill="#6B2C91" radius={[6, 6, 0, 0]} />
-            </BarChart>
+              <Area type="monotone" dataKey="CTL" stroke="#6B2C91" fill="#6B2C91" fillOpacity={0.15} strokeWidth={2} name="CTL (Fitness)" />
+              <Area type="monotone" dataKey="ATL" stroke="#C75B3A" fill="#C75B3A" fillOpacity={0.15} strokeWidth={2} name="ATL (Fatigue)" />
+              <Area type="monotone" dataKey="TSB" stroke="#7BAFD4" fill="#7BAFD4" fillOpacity={0.08} strokeWidth={2} name="TSB (Form)" />
+            </AreaChart>
           </ResponsiveContainer>
         </div>
+      </section>
 
-        <div className="card">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Zap className="w-5 h-5 text-accent-400" />
-            Time in Power Zones
-          </h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={zoneData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-              <XAxis dataKey="zone" stroke="#6b7280" fontSize={12} />
-              <YAxis stroke="#6b7280" fontSize={12} />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
-                labelStyle={{ color: '#111827' }}
-              />
-              <Bar dataKey="hours" radius={[6, 6, 0, 0]}>
-                {zoneData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={zoneColors[entry.zone]} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+      {/* ── Charts Row ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+        <section>
+          <div className="accent-line" />
+          <h2 className="section-title">Weekly Training Load</h2>
+          <div className="card border-r-0">
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={weeklyTssData.slice(-12)}>
+                <CartesianGrid strokeDasharray="3 6" stroke="#E2E0DA" vertical={false} />
+                <XAxis dataKey="date" stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#FDFCFA', border: '1px solid #D1CEC6', borderRadius: '0' }}
+                  labelStyle={{ color: '#3D3A35', fontFamily: 'Playfair Display' }}
+                />
+                <Bar dataKey="tss" fill="#6B2C91" radius={[0, 0, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
+
+        <section>
+          <div className="accent-line" />
+          <h2 className="section-title">Time in Power Zones</h2>
+          <div className="card">
+            <ResponsiveContainer width="100%" height={260}>
+              <BarChart data={zoneData}>
+                <CartesianGrid strokeDasharray="3 6" stroke="#E2E0DA" vertical={false} />
+                <XAxis dataKey="zone" stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#B5B0A6" fontSize={11} tickLine={false} axisLine={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#FDFCFA', border: '1px solid #D1CEC6', borderRadius: '0' }}
+                  labelStyle={{ color: '#3D3A35', fontFamily: 'Playfair Display' }}
+                />
+                <Bar dataKey="hours" radius={[0, 0, 0, 0]}>
+                  {zoneData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={zoneColors[entry.zone]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </section>
       </div>
 
-      {/* Recent Workouts Table */}
-      <div className="card">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-          <Activity className="w-5 h-5 text-primary-600" />
-          Recent Workouts
-        </h3>
+      {/* ── Recent Workouts ── */}
+      <section>
+        <div className="accent-line" />
+        <h2 className="section-title">Recent Workouts</h2>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <table className="table-elegant">
             <thead>
-              <tr className="border-b border-gray-200 text-gray-500">
-                <th className="text-left py-2">Date</th>
-                <th className="text-left py-2">Title</th>
-                <th className="text-left py-2">Type</th>
-                <th className="text-right py-2">Duration</th>
-                <th className="text-right py-2">TSS</th>
-                <th className="text-right py-2">NP</th>
-                <th className="text-right py-2">IF</th>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th className="text-right">Duration</th>
+                <th className="text-right">TSS</th>
+                <th className="text-right">NP</th>
+                <th className="text-right">IF</th>
               </tr>
             </thead>
             <tbody>
               {workouts.slice(-10).reverse().map(w => (
-                <tr key={w.id} className="border-b border-gray-200/50 hover:bg-gray-50">
-                  <td className="py-2 text-gray-400">{w.date.toLocaleDateString()}</td>
-                  <td className="py-2 text-gray-900 font-medium">{w.title}</td>
-                  <td className="py-2">
-                    <span className="px-2 py-1 rounded-lg text-xs font-medium bg-gray-100 text-gray-500">
+                <tr key={w.id}>
+                  <td className="text-warmgray-500">{w.date.toLocaleDateString()}</td>
+                  <td className="text-warmgray-900 font-medium">{w.title}</td>
+                  <td>
+                    <span className="px-2 py-1 text-xs font-medium bg-cream-200 text-warmgray-600 tracking-wide">
                       {w.type}
                     </span>
                   </td>
-                  <td className="py-2 text-right text-gray-400">{w.duration}min</td>
-                  <td className="py-2 text-right text-primary-600 font-semibold">{w.tss}</td>
-                  <td className="py-2 text-right text-gray-400">{w.np}W</td>
-                  <td className="py-2 text-right text-gray-400">{w.if.toFixed(2)}</td>
+                  <td className="text-right text-warmgray-500">{w.duration}min</td>
+                  <td className="text-right text-violet-700 font-semibold">{w.tss}</td>
+                  <td className="text-right text-warmgray-500">{w.np}W</td>
+                  <td className="text-right text-warmgray-500">{w.if.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-      </div>
+      </section>
     </div>
   );
 }
